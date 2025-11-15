@@ -1,5 +1,3 @@
-// canvas.js
-// Handles drawing on HTML5 canvas with smoothing, batching, and local prediction.
 
 class DrawingCanvas {
   constructor(canvasEl) {
@@ -9,7 +7,8 @@ class DrawingCanvas {
     // initialize drawing state before calling resize/redraw
     this.isDrawing = false;
     this.currentStroke = null;
-    this.strokes = []; // local cache of drawn strokes (replayed from opLog)
+    this.strokes = []; 
+    // local cache of drawn strokes (replayed from opLog)
     this.resize();
 
     // bind
@@ -139,8 +138,8 @@ class DrawingCanvas {
     this.ctx.moveTo(pts[0].x, pts[0].y);
     for (let i = 1; i < pts.length; i++) this.ctx.lineTo(pts[i].x, pts[i].y);
     if (this.ctx.fillStyle && this.ctx.fillStyle !== '') {
-      // if fill flagged, also fill the polygon area
-      try { this.ctx.fill(); } catch (e) { /* ignore */ }
+      
+      try { this.ctx.fill(); } catch (e) {  }
     }
     this.ctx.stroke();
   }
@@ -288,12 +287,12 @@ class DrawingCanvas {
   }
 
   drawSegment(points, meta) {
-    // draw only the last segment for performance
+    
     const len = points.length;
     if (len < 2) return;
     const lastPoints = points.slice(Math.max(0, len - 4));
-    // draw on top of existing canvas (no full clear)
-    // allow passing meta explicitly (for ephemeral segments) or fall back to currentStroke
+    
+    
     const useMeta = meta || (this.currentStroke && this.currentStroke.meta) || { color: '#000', width: 2 };
     this.drawStroke({ meta: useMeta, points: lastPoints, _isSegment: true });
   }
