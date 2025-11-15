@@ -1,4 +1,4 @@
-/* --- 1. Global Variables & Root Setup --- */
+
 :root {
   --primary-color: #667eea;
   --primary-color-dark: #5568d3;
@@ -41,7 +41,7 @@
   --white-inset: rgba(255,255,255,0.8);
 }
 
-/* --- 2. Animations --- */
+
 @keyframes dropdownFadeIn {
   from {
     opacity: 0;
@@ -88,7 +88,7 @@
 }
 
 
-/* --- 3. Base & Layout --- */
+
 * { 
   box-sizing: border-box; 
   -webkit-font-smoothing: antialiased;
@@ -136,19 +136,7 @@ html,body,#app {
 }
 
 
-/* --- 4. Toolbar --- */
-/* #toolbar { 
-  display:flex; 
-  padding:12px 16px; 
-  gap:10px; 
-  align-items:center; 
-  background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
-  border-bottom: 1px solid var(--border-color-faint);
-  box-shadow: 0 2px 8px var(--shadow-color-black-light), 0 1px 0 var(--white-inset) inset;
-  flex-wrap: wrap;
-  backdrop-filter: blur(10px);
-} */
- /* --- 4. Toolbar --- */
+
 #toolbar { 
   display:flex; 
   padding:12px 16px; 
@@ -174,7 +162,7 @@ html,body,#app {
   font-weight: 500;
   font-size: 13px;
   cursor: pointer;
-  /* UPDATED: Specific transitions */
+  
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -207,7 +195,7 @@ html,body,#app {
   border-color: var(--border-color-hover);
 }
 
-/* UPDATED: Enhanced :active state */
+
 #toolbar button:active { 
   transition-duration: 0.05s; /* Make the 'press' instant */
   transform: translateY(1px) scale(0.97); /* Press it 'down' and 'in' */
@@ -232,7 +220,7 @@ html,body,#app {
   outline-offset: 2px;
 }
 
-/* Color picker and range input */
+
 #toolbar input[type="color"] { 
   width:44px; 
   height:36px; 
@@ -295,7 +283,7 @@ html,body,#app {
 }
 
 
-/* --- 5. Sidebar --- */
+
 #sidebar {
   background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
   padding:24px 16px;
@@ -345,7 +333,7 @@ html,body,#app {
   cursor:pointer;
   border-radius:10px;
   min-height:44px;
-  /* UPDATED: Specific transitions */
+  
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -404,7 +392,7 @@ html,body,#app {
   transform: scale(1.1);
 }
 
-/* UPDATED: Enhanced :active state */
+
 #sidebar .shape-btn:active {
   transition-duration: 0.05s;
   transform: translateX(2px) scale(0.98); /* Less 'pop', more 'press' */
@@ -422,7 +410,7 @@ html,body,#app {
   border-color: var(--border-color-medium);
   box-shadow: 0 4px 16px var(--shadow-color-light), 0 2px 4px var(--shadow-color-light);
   transform: translateX(4px);
-  /* NEW: Pop-in animation */
+  /* Pop-in animation */
   animation: popIn 0.2s ease-out;
 }
 
@@ -440,7 +428,7 @@ html,body,#app {
 }
 
 
-/* --- 6. Room & User Controls --- */
+
 #roomControl {
   position: relative;
   display: flex;
@@ -460,7 +448,7 @@ html,body,#app {
   font-size: 13px;
   color: var(--primary-color);
   font-weight: 600;
-  /* UPDATED: Specific transitions */
+  
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -479,7 +467,7 @@ html,body,#app {
   box-shadow: 0 4px 12px var(--shadow-color-light);
 }
 
-/* UPDATED: Enhanced :active state */
+
 #roomBtn:active {
   transition-duration: 0.05s;
   transform: translateY(0) scale(0.98);
@@ -500,7 +488,7 @@ html,body,#app {
   font-weight: 500;
 }
 
-/* Room dropdown */
+/
 .roomDropdown {
   position: absolute;
   right: 0;
@@ -573,7 +561,7 @@ html,body,#app {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  /* UPDATED: Specific transitions */
+  /* Specific transitions */
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -588,7 +576,7 @@ html,body,#app {
   box-shadow: 0 6px 20px var(--shadow-color-dark);
 }
 
-/* UPDATED: Enhanced :active state */
+/*  Enhanced :active state */
 #createRoomBtn:active {
   transition-duration: 0.05s;
   transform: scale(0.98);
@@ -660,7 +648,7 @@ html,body,#app {
   color: #2563eb;
 }
 
-/* Users area */
+
 #users {
   margin-left: auto;
   display: flex;
@@ -689,7 +677,7 @@ html,body,#app {
   overflow: hidden;
 }
 
-/* Dropdown with full user list */
+
 .userDropdown {
   position: absolute;
   right: 12px;
@@ -723,7 +711,7 @@ html,body,#app {
   background: var(--primary-gradient-08);
   border-color: var(--border-color-light);
   transform: translateX(4px);
-  /* NEW: Cursor hint for highlighting */
+  /*  Cursor hint for highlighting */
   cursor: pointer;
 }
 
@@ -734,7 +722,7 @@ html,body,#app {
 }
 
 
-/* --- 7. Responsive Toolbar --- */
+
 .toolbarMenu { 
   display:none; 
   padding:8px 12px; 
@@ -784,7 +772,7 @@ html,body,#app {
 }
 
 
-/* --- 8. Cursors & Collaboration --- */
+
 .userEntry {
   display: flex;
   align-items: center;
@@ -816,7 +804,7 @@ html,body,#app {
   color: var(--text-dark);
 }
 
-/* User cursors on canvas */
+
 #cursorsContainer {
   position: absolute;
   top: 0;
@@ -833,17 +821,17 @@ html,body,#app {
   top: 0;
   left: 0;
   z-index: 11;
-  /* UPDATED: Added filter to transition */
+  /* Added filter to transition */
   transition: transform 0.1s ease-out,
               opacity 0.2s ease,
               filter 0.3s ease;
   will-change: transform;
-  /* UPDATED: Default state for highlighting */
+  /* Default state for highlighting */
   opacity: 0.8;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
-/* NEW: Highlighted state for cursor */
+/* Highlighted state for cursor */
 .userCursor.is-highlighted {
   opacity: 1;
   transform: scale(1.1);
@@ -851,7 +839,7 @@ html,body,#app {
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
 }
 
-/* NEW: Fade out other cursors when one is highlighted */
+/* Fade out other cursors when one is highlighted */
 body.is-highlighting-user .userCursor:not(.is-highlighted) {
   opacity: 0.1;
 }
@@ -984,7 +972,7 @@ body.is-highlighting-user .userCursor:not(.is-highlighted) {
 }
 
 
-/* --- 9. Responsive Media Queries --- */
+
 @media (max-width: 900px) {
   .toolbarMenu { display:inline-block }
   /* hide direct toolbar controls */
