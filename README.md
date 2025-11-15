@@ -5,7 +5,7 @@
 The **Real-Time Collaborative Drawing Canvas** is a multi-user web application that allows multiple participants to **draw simultaneously on the same canvas** with **real-time synchronization**.
 It demonstrates strong fundamentals in HTML5 Canvas manipulation, WebSocket communication, and collaborative state management — all **without using frontend frameworks or external drawing libraries**.
 
-You can view the website by visiting: []
+You can view the website by visiting: [https://real-time-canva.onrender.com/]
 
 ---
 
