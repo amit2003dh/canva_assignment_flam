@@ -1,5 +1,4 @@
-// server.js
-// Simple Express + Socket.io server to serve static client and handle realtime events.
+
 
 const path = require('path');
 const express = require('express');
@@ -15,8 +14,7 @@ const io = new Server(server, { cors: { origin: '*' } });
 
 const PORT = process.env.PORT || 3000;
 
-// Serve static client
-//app.use('/client', express.static(path.join(__dirname, '..', 'client')));
+
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
 
