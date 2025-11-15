@@ -134,13 +134,13 @@ Open multiple tabs or browsers — each one represents a different user drawing 
 
 | Task                          | Duration    |
 | ----------------------------- | ----------- |
-| Canvas Drawing Implementation | 5 hrs       |
-| WebSocket Backend Setup       | 4 hrs       |
+| Canvas Drawing Implementation | 8 hrs       |
+| WebSocket Backend Setup       | 5 hrs       |
 | Real-Time Sync Logic          | 6 hrs       |
-| Undo/Redo & State Management  | 5 hrs       |
-| Testing & Debugging           | 3 hrs       |
-| Documentation                 | 2 hrs       |
-| **Total**                     | **~25 hrs** |
+| Undo/Redo & State Management  | 6 hrs       |
+| Testing & Debugging           | 4 hrs       |
+| Documentation                 | 3 hrs       |
+| **Total**                     | **~31 hrs** |
 
 ---
 
