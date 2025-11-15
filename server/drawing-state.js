@@ -1,23 +1,14 @@
-// drawing-state.js
-// Maintains an append-only operation log (opLog) per room and exposes methods
-// to append operations, apply undo/redo as compensating ops, and rebuild
-// canvas state by replaying the op log.
 
-const { v4: uuidv4 } = require('uuid');
 
-// Each operation has shape:
-// { opId, type, user, ts, payload }
-// where type is 'stroke' | 'undo' | 'redo' | 'snapshot'
-
-// Store state per room: roomId -> { opLog, undoStack, redoStack }
+const { v4: uuidv4 } 
 const roomStates = new Map();
 
 function ensureRoomState(roomId) {
   if (!roomStates.has(roomId)) {
     roomStates.set(roomId, {
       opLog: [],
-      undoStack: [], // stores stroke ops in visible timeline order
-      redoStack: [] // stores undone stroke ops (LIFO)
+      undoStack: [], 
+      redoStack: [] 
     });
   }
   return roomStates.get(roomId);
@@ -42,7 +33,7 @@ function addStroke(roomId, user, stroke) {
   const state = ensureRoomState(roomId);
   const op = newOp('stroke', user, { stroke });
   appendOp(roomId, op);
-  // push to undo stack and clear redo stack (new action invalidates redo history)
+
   state.undoStack.push(op);
   state.redoStack.length = 0;
   return op;
