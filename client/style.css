@@ -1,0 +1,1009 @@
+/* --- 1. Global Variables & Root Setup --- */
+:root {
+  --primary-color: #667eea;
+  --primary-color-dark: #5568d3;
+  --secondary-color: #764ba2;
+  --secondary-color-dark: #6a3f8f;
+  
+  --primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  --primary-gradient-hover: linear-gradient(135deg, var(--primary-color-dark) 0%, var(--secondary-color-dark) 100%);
+  
+  /* Gradients with opacity */
+  --primary-gradient-10: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%);
+  --primary-gradient-15: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.15) 100%);
+  --primary-gradient-08: linear-gradient(135deg, rgba(102,126,234,0.08) 0%, rgba(118,75,162,0.08) 100%);
+
+  /* Backgrounds & Text */
+  --bg-light: #f8fafc;
+  --bg-white: #ffffff;
+  --bg-mid: #f3f4f6;
+  --text-dark: #374151;
+  --text-light: #6b7280;
+  
+  /* Shadows & Borders (Primary Color) */
+  --shadow-color-light: rgba(102,126,234,0.2);
+  --shadow-color-medium: rgba(102,126,234,0.4);
+  --shadow-color-dark: rgba(102,126,234,0.5);
+  
+  /* Shadows (Black) */
+  --shadow-color-black-faint: rgba(0,0,0,0.02);
+  --shadow-color-black-light: rgba(0,0,0,0.05);
+  --shadow-color-black-medium: rgba(0,0,0,0.1);
+  --shadow-color-black-dark: rgba(0,0,0,0.15);
+  
+  /* Borders */
+  --border-color-faint: rgba(0,0,0,0.08);
+  --border-color-light: rgba(102,126,234,0.2);
+  --border-color-medium: rgba(102,126,234,0.3);
+  --border-color-hover: rgba(59,130,246,0.3);
+  
+  /* Misc */
+  --white-inset: rgba(255,255,255,0.8);
+}
+
+/* --- 2. Animations --- */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cursorPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* NEW: Pop-in animation for active tool */
+@keyframes popIn {
+  0% {
+    transform: translateX(4px) scale(0.95);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(4px) scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* --- 3. Base & Layout --- */
+* { 
+  box-sizing: border-box; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,body,#app { 
+  height:100%; 
+  margin:0; 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background: var(--primary-gradient);
+  overflow: hidden;
+}
+
+#app {
+  display:flex;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  box-shadow: inset 0 0 100px var(--shadow-color-black-light), 0 0 50px var(--shadow-color-black-medium);
+}
+
+#mainArea { 
+  display:flex; 
+  flex-direction:column; 
+  height:100%;
+  background: var(--bg-light);
+}
+
+#canvasWrap { 
+  position:relative; 
+  height:calc(100% - 60px);
+  background: var(--bg-white);
+  box-shadow: inset 0 0 100px var(--shadow-color-black-faint);
+}
+
+#canvas { 
+  width:100%; 
+  height:100%; 
+  display:block; 
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(102,126,234,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(118,75,162,0.03) 0%, transparent 50%),
+    linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+
+/* --- 4. Toolbar --- */
+/* #toolbar { 
+  display:flex; 
+  padding:12px 16px; 
+  gap:10px; 
+  align-items:center; 
+  background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+  border-bottom: 1px solid var(--border-color-faint);
+  box-shadow: 0 2px 8px var(--shadow-color-black-light), 0 1px 0 var(--white-inset) inset;
+  flex-wrap: wrap;
+  backdrop-filter: blur(10px);
+} */
+ /* --- 4. Toolbar --- */
+#toolbar { 
+  display:flex; 
+  padding:12px 16px; 
+  gap:10px; 
+  align-items:center; 
+  background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+  border-bottom: 1px solid var(--border-color-faint);
+  box-shadow: 0 2px 8px var(--shadow-color-black-light), 0 1px 0 var(--white-inset) inset;
+  flex-wrap: wrap;
+  backdrop-filter: blur(10px);
+  
+  
+  position: relative; 
+  z-index: 10;        
+}
+
+#toolbar button { 
+  padding:8px 14px; 
+  border: 1px solid var(--border-color-faint);
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  /* UPDATED: Specific transitions */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  box-shadow: 0 1px 2px var(--shadow-color-black-light), 0 1px 0 var(--white-inset) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+#toolbar button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s;
+}
+
+#toolbar button:hover::before {
+  left: 100%;
+}
+
+#toolbar button:hover, #toolbar button:focus { 
+  transform: translateY(-2px) scale(1.05); 
+  z-index: 2;
+  box-shadow: 0 4px 12px var(--shadow-color-black-medium), 0 2px 4px var(--shadow-color-black-light);
+  border-color: var(--border-color-hover);
+}
+
+/* UPDATED: Enhanced :active state */
+#toolbar button:active { 
+  transition-duration: 0.05s; /* Make the 'press' instant */
+  transform: translateY(1px) scale(0.97); /* Press it 'down' and 'in' */
+  box-shadow: 0 1px 2px var(--shadow-color-black-medium) inset; /* Inset shadow */
+  filter: brightness(0.95);
+}
+
+#toolbar button.active {
+  background: var(--primary-gradient);
+  border: 1px solid var(--border-color-light);
+  color: var(--bg-white);
+  box-shadow: 0 4px 16px var(--shadow-color-medium), 0 2px 4px var(--shadow-color-light);
+  text-shadow: 0 1px 2px var(--shadow-color-black-medium);
+}
+
+#toolbar button.active:hover {
+  box-shadow: 0 6px 20px var(--shadow-color-dark), 0 2px 6px var(--shadow-color-medium);
+}
+
+#toolbar button:focus { 
+  outline: 2px solid var(--shadow-color-medium);
+  outline-offset: 2px;
+}
+
+/* Color picker and range input */
+#toolbar input[type="color"] { 
+  width:44px; 
+  height:36px; 
+  padding:2px;
+  border: 2px solid var(--border-color-light);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px var(--shadow-color-black-medium);
+}
+
+#toolbar input[type="color"]:hover {
+  border-color: var(--shadow-color-medium);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px var(--shadow-color-black-dark);
+}
+
+#toolbar input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(102,126,234,0.2) 0%, rgba(118,75,162,0.2) 100%);
+  outline: none;
+  transition: all 0.2s ease;
+  width: 120px;
+}
+
+#toolbar input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--shadow-color-medium);
+  transition: all 0.2s ease;
+}
+
+#toolbar input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px var(--shadow-color-dark);
+}
+
+#toolbar input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px var(--shadow-color-medium);
+  transition: all 0.2s ease;
+}
+
+#toolbar input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px var(--shadow-color-dark);
+}
+
+
+/* --- 5. Sidebar --- */
+#sidebar {
+  background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+  padding:24px 16px;
+  width:200px;
+  height:100%;
+  box-shadow: 2px 0 12px var(--shadow-color-black-light), 1px 0 0 var(--white-inset) inset;
+  border-right: 1px solid var(--border-color-faint);
+  backdrop-filter: blur(10px);
+}
+
+#sidebar h3 { 
+  margin:0 0 24px 8px; 
+  font-size:28px; 
+  font-weight:800; 
+  line-height:1; 
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+#sidebar .shape-group { 
+  margin-bottom:16px;
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(102,126,234,0.02);
+}
+
+#sidebar button { 
+  display:block; 
+  margin:8px 0; 
+  width:100%; 
+  background:transparent; 
+  border:0; 
+  padding:0;
+  cursor: pointer;
+}
+
+#sidebar .shape-btn {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border:1px solid transparent;
+  background: rgba(255,255,255,0.6);
+  cursor:pointer;
+  border-radius:10px;
+  min-height:44px;
+  /* UPDATED: Specific transitions */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px var(--shadow-color-black-light);
+  position: relative;
+  overflow: hidden;
+}
+
+#sidebar .shape-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary-gradient);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+  transform-origin: bottom;
+}
+
+#sidebar .shape-btn .icon { 
+  width:24px; 
+  height:24px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center;
+  transition: transform 0.2s ease;
+}
+
+#sidebar .shape-btn .icon svg { 
+  display:block; 
+  width:18px; 
+  height:18px;
+  stroke-width: 2.5;
+}
+
+#sidebar .shape-btn .label { 
+  font-size:14px; 
+  line-height:1; 
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+/* hover / focus states for sidebar buttons */
+#sidebar .shape-btn:hover {
+  background: var(--primary-gradient-10);
+  transform: translateX(4px) scale(1.02);
+  box-shadow: 0 4px 12px var(--shadow-color-light);
+  border-color: var(--border-color-light);
+}
+
+#sidebar .shape-btn:hover .icon {
+  transform: scale(1.1);
+}
+
+/* UPDATED: Enhanced :active state */
+#sidebar .shape-btn:active {
+  transition-duration: 0.05s;
+  transform: translateX(2px) scale(0.98); /* Less 'pop', more 'press' */
+  box-shadow: 0 1px 2px var(--shadow-color-black-medium) inset;
+  filter: brightness(0.98);
+}
+
+#sidebar .shape-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--shadow-color-light), 0 4px 12px var(--shadow-color-light);
+}
+
+#sidebar .shape-btn.active {
+  background: var(--primary-gradient-15);
+  border-color: var(--border-color-medium);
+  box-shadow: 0 4px 16px var(--shadow-color-light), 0 2px 4px var(--shadow-color-light);
+  transform: translateX(4px);
+  /* NEW: Pop-in animation */
+  animation: popIn 0.2s ease-out;
+}
+
+#sidebar .shape-btn.active::before {
+  transform: scaleY(1);
+}
+
+#sidebar .shape-btn.active .label {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+#sidebar .shape-btn.active .icon svg {
+  stroke: var(--primary-color);
+}
+
+
+/* --- 6. Room & User Controls --- */
+#roomControl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+}
+
+#roomBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--primary-gradient-10);
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--primary-color);
+  font-weight: 600;
+  /* UPDATED: Specific transitions */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px var(--shadow-color-light);
+  position: relative;
+  z-index: 71;
+  pointer-events: auto;
+  user-select: none;
+}
+
+#roomBtn:hover {
+  background: var(--primary-gradient-15);
+  border-color: var(--shadow-color-medium);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow-color-light);
+}
+
+/* UPDATED: Enhanced :active state */
+#roomBtn:active {
+  transition-duration: 0.05s;
+  transform: translateY(0) scale(0.98);
+  filter: brightness(0.95);
+  box-shadow: 0 1px 2px var(--shadow-color-light) inset;
+}
+
+#roomBtn:focus {
+  outline: 2px solid var(--shadow-color-medium);
+  outline-offset: 2px;
+}
+
+#roomBtn svg {
+  flex-shrink: 0;
+}
+
+#currentRoomName {
+  font-weight: 500;
+}
+
+/* Room dropdown */
+.roomDropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color-light);
+  box-shadow: 0 20px 60px var(--shadow-color-black-dark), 0 0 0 1px var(--white-inset) inset;
+  border-radius: 16px;
+  min-width: 300px;
+  max-width: 90vw;
+  max-height: 400px;
+  z-index: 100;
+  padding: 16px;
+  animation: dropdownFadeIn 0.2s ease-out;
+  pointer-events: auto;
+  overflow: visible;
+}
+
+.roomDropdown.hidden {
+  display: none;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.roomDropdownHeader {
+  font-weight: 700;
+  font-size: 16px;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(102,126,234,0.1);
+}
+
+.roomInputGroup {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#roomNameInput {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid var(--border-color-light);
+  border-radius: 10px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+
+#roomNameInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px var(--shadow-color-light), 0 4px 12px var(--shadow-color-light);
+  background: var(--bg-white);
+  transform: translateY(-1px);
+}
+
+#createRoomBtn {
+  padding: 10px 20px;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  /* UPDATED: Specific transitions */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px var(--shadow-color-medium);
+  text-shadow: 0 1px 2px var(--shadow-color-black-medium);
+}
+
+#createRoomBtn:hover {
+  background: var(--primary-gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow-color-dark);
+}
+
+/* UPDATED: Enhanced :active state */
+#createRoomBtn:active {
+  transition-duration: 0.05s;
+  transform: scale(0.98);
+  filter: brightness(0.95);
+  box-shadow: 0 1px 2px var(--shadow-color-medium) inset;
+}
+
+#createRoomBtn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+#createRoomBtn:disabled:hover {
+  background: #9ca3af;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.roomList {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.roomItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+  background: rgba(255,255,255,0.6);
+}
+
+.roomItem:hover {
+  background: var(--primary-gradient-08);
+  border-color: var(--border-color-light);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px var(--shadow-color-light);
+}
+
+.roomItem.active {
+  background: var(--primary-gradient-15);
+  color: var(--primary-color);
+  border-color: var(--border-color-medium);
+  box-shadow: 0 2px 8px var(--shadow-color-light);
+  font-weight: 600;
+}
+
+.roomItemName {
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.roomItemBadge {
+  font-size: 11px;
+  color: var(--text-light);
+  background: var(--bg-mid);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.roomItem.active .roomItemBadge {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* Users area */
+#users {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+#userCount {
+  background: var(--primary-gradient-15);
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  min-width: 32px;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--shadow-color-light), 0 1px 0 rgba(255,255,255,0.5) inset;
+  border: 1px solid var(--border-color-light);
+}
+
+#userList {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  max-width: 260px;
+  overflow: hidden;
+}
+
+/* Dropdown with full user list */
+.userDropdown {
+  position: absolute;
+  right: 12px;
+  top: 52px;
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color-light);
+  box-shadow: 0 20px 60px var(--shadow-color-black-dark), 0 0 0 1px var(--white-inset) inset;
+  border-radius: 16px;
+  min-width: 220px;
+  max-height: 300px;
+  overflow: auto;
+  z-index: 60;
+  padding: 12px;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+.userDropdown.hidden { display:none }
+
+.userDropdown .entry { 
+  display:flex; 
+  gap:10px; 
+  align-items:center; 
+  padding:10px 12px; 
+  border-radius:10px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.userDropdown .entry:hover { 
+  background: var(--primary-gradient-08);
+  border-color: var(--border-color-light);
+  transform: translateX(4px);
+  /* NEW: Cursor hint for highlighting */
+  cursor: pointer;
+}
+
+.userDropdown .entry .name { 
+  font-size:13px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+
+/* --- 7. Responsive Toolbar --- */
+.toolbarMenu { 
+  display:none; 
+  padding:8px 12px; 
+  border-radius:8px; 
+  background: var(--primary-gradient-10);
+  border: 1px solid var(--border-color-light);
+  cursor:pointer;
+  font-weight: 600;
+  color: var(--primary-color);
+  transition: all 0.2s ease;
+}
+
+.toolbarMenu:hover {
+  background: var(--primary-gradient-15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow-color-light);
+}
+
+.toolbarDropdown { 
+  position: absolute; 
+  left: 8px; 
+  right: 8px; 
+  top: 60px; 
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color-light); 
+  box-shadow: 0 20px 60px var(--shadow-color-black-dark), 0 0 0 1px var(--white-inset) inset; 
+  border-radius:16px; 
+  padding:16px; 
+  z-index:70;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+.toolbarDropdown.hidden { display:none }
+
+.toolbarDropdown .item { 
+  padding:10px 12px; 
+  display:inline-block; 
+  margin:6px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.toolbarDropdown .item:hover {
+  background: var(--primary-gradient-10);
+  transform: translateY(-2px);
+}
+
+
+/* --- 8. Cursors & Collaboration --- */
+.userEntry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  background: rgba(255,255,255,0.0);
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #111;
+}
+
+.userDot { 
+  width:12px; 
+  height:12px; 
+  border-radius:50%; 
+  display:inline-block; 
+}
+
+.moreBadge {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:20px;
+  border-radius:10px;
+  background: var(--bg-mid);
+  font-size:12px;
+  color: var(--text-dark);
+}
+
+/* User cursors on canvas */
+#cursorsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.userCursor {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  /* UPDATED: Added filter to transition */
+  transition: transform 0.1s ease-out,
+              opacity 0.2s ease,
+              filter 0.3s ease;
+  will-change: transform;
+  /* UPDATED: Default state for highlighting */
+  opacity: 0.8;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* NEW: Highlighted state for cursor */
+.userCursor.is-highlighted {
+  opacity: 1;
+  transform: scale(1.1);
+  z-index: 12; /* Bring to front */
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+/* NEW: Fade out other cursors when one is highlighted */
+body.is-highlighting-user .userCursor:not(.is-highlighted) {
+  opacity: 0.1;
+}
+
+
+.cursorDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+
+.cursorLabel {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  transition: opacity 0.2s ease;
+}
+
+/* Recent actions indicator */
+.recentActions {
+  position: fixed;
+  top: 60px;
+  right: 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 200px;
+}
+
+.recentActionItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color-light);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow-color-black-medium), 0 0 0 1px var(--white-inset) inset;
+  animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.recentActionItem:hover {
+  transform: translateX(-4px);
+  box-shadow: 0 12px 32px var(--shadow-color-black-dark), 0 0 0 1px var(--white-inset) inset;
+}
+
+.actionIcon {
+  font-size: 18px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.actionText {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.actionUserName {
+  font-weight: 600;
+}
+
+.actionType {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+/* Custom scrollbar styling */
+.roomList::-webkit-scrollbar,
+.userDropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.roomList::-webkit-scrollbar-track,
+.userDropdown::-webkit-scrollbar-track {
+  background: rgba(102,126,234,0.05);
+  border-radius: 4px;
+}
+
+.roomList::-webkit-scrollbar-thumb,
+.userDropdown::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(102,126,234,0.3) 0%, rgba(118,75,162,0.3) 100%);
+  border-radius: 4px;
+}
+
+.roomList::-webkit-scrollbar-thumb:hover,
+.userDropdown::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(102,126,234,0.5) 0%, rgba(118,75,162,0.5) 100%);
+}
+
+/* Enhanced user list button */
+.userListButton {
+  cursor: pointer;
+  padding: 8px 12px;
+  background: var(--primary-gradient-08);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.userListButton:hover { 
+  background: var(--primary-gradient-15);
+  border-color: var(--border-color-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow-color-light);
+}
+
+
+/* --- 9. Responsive Media Queries --- */
+@media (max-width: 900px) {
+  .toolbarMenu { display:inline-block }
+  /* hide direct toolbar controls */
+  #toolbar > button:not(.toolbarMenu):not(#roomBtn), #toolbar input { display:none; }
+  /* Keep room button visible */
+  #roomControl { display: flex; }
+  #roomBtn { padding: 6px 8px; font-size: 12px; }
+  #roomBtn svg { width: 14px; height: 14px; }
+  #currentRoomName { font-size: 12px; }
+  
+  #toolbar { gap:8px; padding:10px; }
+  #toolbar input[type="range"] { max-width: 120px; }
+  #toolbar button { padding:8px 10px; font-size:13px; }
+  #userList { max-width: 160px }
+}
+
+@media (max-width: 520px) {
+  #sidebar { width:140px }
+  #sidebar h3 { font-size:20px }
+  #toolbar { justify-content: flex-start }
+  #toolbar button { padding:6px 6px; font-size:13px }
+}
